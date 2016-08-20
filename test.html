@@ -9,10 +9,28 @@
 		<style type="text/css"></style>
 	</head>
 	<body>
-		<div>
+		<div id="test">
 
 			Click me
 		</div>
 	</body>
-	<script type="text/javascript"></script>
+	<script type="text/javascript" src="./js/simple_confirm.js"></script>
+	<script type="text/javascript">
+		(function() {
+			var link = document.getElementById('test');
+			var con_item = new SimpleConfirm.ConfirmItem({
+				trigger: link,
+				message: 'Do you want to proceed?',
+				confirm_text: 'Affirmative',
+				cancel_text: 'Negative',
+				callback: function() {
+					console.log('thing');
+				},
+				styled: true,
+				enableOverlay: true
+			});
+
+			con_item.init();
+		})();
+	</script>
 </html>
