@@ -1,0 +1,45 @@
+.sc-overlay {
+	display: none;
+	background-color: rgba(0, 0, 0, .3);
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.sc-popup {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: .3em;
+	padding: 2em 1em 1em;
+	background-color: #eeeeee;
+	box-shadow: 0 0 4px 0 #333333;
+	display: none;
+	width: 350px;
+}
+
+.sc-message-box {
+	min-height: 5em;
+	text-align: center;
+}
+
+.sc-btn {
+	display: inline-block;
+	float: right;
+	text-decoration: none;
+	padding: .5em 1em;
+	border-radius: .3em;
+	color: #555555;
+}
+
+.sc-btn.sc-confirm {
+	background-color: #55bb55;
+}
+
+.sc-btn.sc-cancel {
+	background-color: #cccccc;
+	margin-right: 1em;
+}
