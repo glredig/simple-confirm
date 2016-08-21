@@ -8,7 +8,7 @@ var SimpleConfirm = (function() {
 		this.confirm_text = config.confirm_text || 'Yes';
 		this.cancel_text = config.cancel_text || 'Cancel';
 		this.callback = config.callback;
-		this.styled = config.styled || false;
+		this.inlineStyle = config.inlineStyle || false;
 		this.enableOverlay = config.enableOverlay || false;
 	}
 
@@ -17,7 +17,7 @@ var SimpleConfirm = (function() {
 			this.buildHTML();
 			this.setupListeners();
 
-			if (this.styled) {
+			if (this.inlineStyle) {
 				this.styleHTML();
 			}
 		},
@@ -52,16 +52,32 @@ var SimpleConfirm = (function() {
 		},
 
 		setupListeners: function() {
-			this.trigger.addEventListener('click', this.show.bind(this));
+			if (typeof addEventListener === 'function') {
+				this.trigger.addEventListener('click', this.show.bind(this));
 
-			this.confirm_btn.addEventListener('click', this.callback);
+				this.confirm_btn.addEventListener('click', function(e) {
+					e.preventDefault();
+					this.hide();
+					this.callback();
+				}.bind(this));
 
-			this.cancel_btn.addEventListener('click', this.hide.bind(this));
+				this.cancel_btn.addEventListener('click', this.hide.bind(this));
+			}
+			else if (typeof attachEvent === 'function') {
+				this.trigger.attachEvent('click', this.show.bind(this));
+
+				this.confirm_btn.attachEvent('click', function(e) {
+					e.preventDefault();
+					this.hide();
+					this.callback();
+				}.bind(this));
+
+				this.cancel_btn.attachEvent('click', this.hide.bind(this));
+			}
+			
 		},
 
 		styleHTML: function() {
-			console.log('style');
-			
 			if (this.enableOverlay) {
 				this.overlay.style.display = 'none';
 				this.overlay.style.backgroundColor = 'rgba(0, 0, 0, .4)';
