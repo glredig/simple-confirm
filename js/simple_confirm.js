@@ -8,6 +8,7 @@ var SimpleConfirm = (function() {
 		this.confirm_text = config.confirm_text || 'Yes';
 		this.cancel_text = config.cancel_text || 'Cancel';
 		this.callback = config.callback;
+		this.cancelCallback = config.cancelCallback;
 		this.inlineStyle = config.inlineStyle || false;
 		this.enableOverlay = config.enableOverlay || false;
 	}
@@ -67,10 +68,16 @@ var SimpleConfirm = (function() {
 				this.cancel_btn.addEventListener('click', function(e) {
 					e.preventDefault();
 					this.hide();
+					if (typeof this.cancelCallback === 'function') {
+						this.cancelCallback();
+					}
 				}.bind(this));
 			}
 			else if (typeof attachEvent === 'function') {
-				this.trigger.attachEvent('click', this.show.bind(this));
+				this.trigger.attachEvent('click', function(e) {
+					e.preventDefault();
+					this.show();
+				}.bind(this));
 
 				this.confirm_btn.attachEvent('click', function(e) {
 					e.preventDefault();
@@ -78,7 +85,10 @@ var SimpleConfirm = (function() {
 					this.callback();
 				}.bind(this));
 
-				this.cancel_btn.attachEvent('click', this.hide.bind(this));
+				this.cancel_btn.attachEvent('click', function(e) {
+					e.preventDefault();
+					this.hide();
+				}.bind(this));
 			}
 			
 		},
