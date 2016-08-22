@@ -53,7 +53,10 @@ var SimpleConfirm = (function() {
 
 		setupListeners: function() {
 			if (typeof addEventListener === 'function') {
-				this.trigger.addEventListener('click', this.show.bind(this));
+				this.trigger.addEventListener('click', function(e) {
+					e.preventDefault();
+					this.show();
+				}.bind(this));
 
 				this.confirm_btn.addEventListener('click', function(e) {
 					e.preventDefault();
@@ -61,7 +64,10 @@ var SimpleConfirm = (function() {
 					this.callback();
 				}.bind(this));
 
-				this.cancel_btn.addEventListener('click', this.hide.bind(this));
+				this.cancel_btn.addEventListener('click', function(e) {
+					e.preventDefault();
+					this.hide();
+				}.bind(this));
 			}
 			else if (typeof attachEvent === 'function') {
 				this.trigger.attachEvent('click', this.show.bind(this));
